@@ -1,4 +1,4 @@
-import { filter, scan, startWith } from 'rxjs';
+import { filter, interval, scan, startWith, throttle } from 'rxjs';
 import { subject$, type Message, type OrderBookMessage, type Side } from './ws';
 
 export interface OrderBookValue {
@@ -53,5 +53,6 @@ export const processMessage = (acc: OrderBook, cur: OrderBookMessage): OrderBook
 export const data$ = subject$.pipe(
 	filter(isOrderBookMessage),
 	scan(processMessage, {}),
+	throttle((_) => interval(100)),
 	startWith({} as OrderBook)
 );
