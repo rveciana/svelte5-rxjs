@@ -7,7 +7,7 @@ import { type Message, type OrderBookMessage } from './ws';
 const partialData: OrderBookMessage = {
 	table: 'orderBookL2_25',
 
-	action: 'partial',∫
+	action: 'partial',
 	data: [
 		{
 			symbol: 'XBTUSD',

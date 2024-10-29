@@ -5,6 +5,7 @@ export interface OrderBookValue {
 	side: Side;
 	size: number;
 	price: number;
+	prevSize?: number;
 }
 export interface OrderBook {
 	[id: number]: OrderBookValue;
@@ -31,7 +32,10 @@ export const processMessage = (acc: OrderBook, cur: OrderBookMessage): OrderBook
 		case 'update': {
 			let out = acc;
 			for (let ord of cur.data) {
-				out = { ...out, [ord.id]: { ...acc[ord.id], side: ord.side, size: ord.size } };
+				out = {
+					...out,
+					[ord.id]: { ...acc[ord.id], side: ord.side, size: ord.size, prevSize: acc[ord.id].size }
+				};
 			}
 			return out;
 		}
